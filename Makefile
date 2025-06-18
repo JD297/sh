@@ -1,8 +1,8 @@
 .POSIX:
 
 CC            = cc
-CFLAGS        = -std=c99 -Wall -Wextra -Wpedantic -g
-LDFLAGS       = 
+CFLAGS        = -Wall -Wextra -Wpedantic -g
+LDFLAGS       = -lreadline
 
 TARGET        = sh
 PREFIX        = /usr/local
@@ -14,7 +14,7 @@ BUILDDIR      = build
 $(BUILDDIR)/$(TARGET): $(BUILDDIR)/sh.o
 	$(CC) $(CFLAGS) $(BUILDDIR)/sh.o -o $@ $(LDFLAGS)
 
-$(BUILDDIR)/sh.o: $(SRCDIR)/sh.c
+$(BUILDDIR)/sh.o: $(SRCDIR)/sh.c $(SRCDIR)/vec.h $(SRCDIR)/exit.h
 	$(CC) $(CFLAGS) -c $(SRCDIR)/sh.c -o $@
 
 clean:
