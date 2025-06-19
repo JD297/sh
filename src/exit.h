@@ -2,14 +2,14 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-extern void sh_built_in_exit(int argc, char **argv);
+extern int sh_built_in_exit(int argc, char **argv);
 
 static void sh_built_in_exit_usage(char **argv)
 {
 	fprintf(stderr, "Usage: %s [n]\n", argv[0]);
 }
 
-void sh_built_in_exit(int argc, char **argv)
+int sh_built_in_exit(int argc, char **argv)
 {
 	int opt;
 	int code = 0;

@@ -8,6 +8,7 @@
 
 vector_t args;
 char *cmd = NULL;
+int code = 0;
 
 extern void sh_free();
 
@@ -46,7 +47,7 @@ int main()
 		}
 
 		if (strcmp("exit", *vec_begin(&args)) == 0) {
-			sh_built_in_exit(args.num, (char **)args.elements);
+			code = sh_built_in_exit(args.num, (char **)args.elements);
 		}
 
 		next: {
@@ -56,5 +57,5 @@ int main()
 		}
 	}
 
-	return EXIT_SUCCESS;
+	return code;
 }
