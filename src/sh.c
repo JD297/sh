@@ -21,16 +21,17 @@ vector_t args;
 char *cmd = NULL;
 int code = 0;
 char *code_str = NULL;
-extern void sh_free();
 
-void sh_free()
+extern void sh_free(void);
+
+void sh_free(void)
 {
 	free(cmd);
 	free(code_str);
 	vec_free(&args);
 }
 
-int main()
+int main(void)
 {
 	vec_init(&args);
 
