@@ -1,4 +1,4 @@
-#include <features.h>
+#include <unistd.h>
 
 #if defined( __GNU_LIBRARY__)
 #define OPTIND_RESET() optind = 0;
