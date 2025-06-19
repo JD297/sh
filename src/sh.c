@@ -69,16 +69,16 @@ int main()
 				++args.num;
 			}
 
-			code = sh_built_in_exit(args.num, (char **)args.elements);
+			code = sh_built_in_exit(args.num, (char **)vec_begin(&args));
 		}
 		else if (strcmp(":", *vec_begin(&args)) == 0) {
-			code = sh_built_in_colon(args.num, (char **)args.elements);
+			code = sh_built_in_colon(args.num, (char **)vec_begin(&args));
 		}
 		else if (strcmp("true", *vec_begin(&args)) == 0) {
-			code = sh_built_in_true(args.num, (char **)args.elements);
+			code = sh_built_in_true(args.num, (char **)vec_begin(&args));
 		}
 		else if (strcmp("false", *vec_begin(&args)) == 0) {
-			code = sh_built_in_false(args.num, (char **)args.elements);
+			code = sh_built_in_false(args.num, (char **)vec_begin(&args));
 		}
 		else {
 			pid_t pid;
