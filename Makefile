@@ -11,7 +11,7 @@ MANDIR        = $(PREFIX)/share/man
 SRCDIR        = src
 BUILDDIR      = build
 
-BUILDINS      = $(SRCDIR)/exit.h $(SRCDIR)/colon.h $(SRCDIR)/true.h $(SRCDIR)/false.h
+BUILDINS      = $(SRCDIR)/exit.h $(SRCDIR)/colon.h $(SRCDIR)/true.h $(SRCDIR)/false.h $(SRCDIR)/cd.h
 
 $(BUILDDIR)/$(TARGET): $(BUILDDIR)/sh.o
 	$(CC) $(CFLAGS) $(BUILDDIR)/sh.o -o $@ $(LDFLAGS)

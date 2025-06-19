@@ -8,16 +8,16 @@
 #define JD297_VEC_IMPLEMENTATION
 #include "vec.h"
 
-#include "exit.h"
+#include "cd.h"
 #include "colon.h"
-#include "true.h"
+#include "exit.h"
 #include "false.h"
+#include "true.h"
 
 vector_t args;
 char *cmd = NULL;
 int code = 0;
 char *code_str = NULL;
-
 extern void sh_free();
 
 void sh_free()
@@ -79,6 +79,9 @@ int main()
 		}
 		else if (strcmp("false", *vec_begin(&args)) == 0) {
 			code = sh_built_in_false(args.num, (char **)vec_begin(&args));
+		}
+		else if (strcmp("cd", *vec_begin(&args)) == 0) {
+			code = sh_built_in_cd(args.num, (char **)vec_begin(&args));
 		}
 		else {
 			pid_t pid;
