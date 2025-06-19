@@ -84,6 +84,9 @@ int main()
 		else if (strcmp("cd", *vec_begin(&args)) == 0) {
 			code = sh_built_in_cd(args.num, (char **)vec_begin(&args));
 		}
+		else if (strcmp("unset", *vec_begin(&args)) == 0) {
+			code = sh_built_in_unset(args.num, (char **)vec_begin(&args));
+		}
 		else {
 			pid_t pid;
 
