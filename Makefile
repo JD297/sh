@@ -11,10 +11,12 @@ MANDIR        = $(PREFIX)/share/man
 SRCDIR        = src
 BUILDDIR      = build
 
+BUILDINS      = $(SRCDIR)/exit.h $(SRCDIR)/colon.h $(SRCDIR)/true.h $(SRCDIR)/false.h
+
 $(BUILDDIR)/$(TARGET): $(BUILDDIR)/sh.o
 	$(CC) $(CFLAGS) $(BUILDDIR)/sh.o -o $@ $(LDFLAGS)
 
-$(BUILDDIR)/sh.o: $(SRCDIR)/sh.c $(SRCDIR)/vec.h $(SRCDIR)/exit.h
+$(BUILDDIR)/sh.o: $(SRCDIR)/sh.c $(SRCDIR)/vec.h $(BUILDINS)
 	$(CC) $(CFLAGS) -c $(SRCDIR)/sh.c -o $@
 
 clean:

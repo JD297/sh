@@ -3,10 +3,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <sys/wait.h>
+#include <unistd.h>
 #define JD297_VEC_IMPLEMENTATION
 #include "vec.h"
 
 #include "exit.h"
+#include "colon.h"
+#include "true.h"
+#include "false.h"
 
 vector_t args;
 char *cmd = NULL;
@@ -65,6 +70,36 @@ int main()
 			}
 
 			code = sh_built_in_exit(args.num, (char **)args.elements);
+		}
+		else if (strcmp(":", *vec_begin(&args)) == 0) {
+			code = sh_built_in_colon(args.num, (char **)args.elements);
+		}
+		else if (strcmp("true", *vec_begin(&args)) == 0) {
+			code = sh_built_in_true(args.num, (char **)args.elements);
+		}
+		else if (strcmp("false", *vec_begin(&args)) == 0) {
+			code = sh_built_in_false(args.num, (char **)args.elements);
+		}
+		else {
+			pid_t pid;
+
+			if ((pid = fork()) == -1) {
+				err(EXIT_FAILURE, "fork");
+			}
+
+			if (pid == 0) {
+				if (execvp(*vec_begin(&args), (char **)vec_begin(&args)) == -1) {
+					err(EXIT_FAILURE, "%s", (char *)*vec_begin(&args));
+				}
+			}
+
+			int wstatus;
+
+			if (waitpid(pid, &wstatus, 0) == -1) {
+				err(EXIT_FAILURE, "waitpid");
+			}
+
+			code = WEXITSTATUS(wstatus);
 		}
 
 		next: {
