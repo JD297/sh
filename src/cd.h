@@ -3,6 +3,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#include "macro.h"
+
 static char *sh_built_in_cd_program_invocation_name;
 
 int sh_built_in_cd(int argc, char **argv);
@@ -50,6 +52,7 @@ int sh_built_in_cd(int argc, char **argv)
 	sh_built_in_cd_program_invocation_name = argv[0];
 
 	int opt;
+	OPTIND_RESET();
 	char arg = 'L';
 	char *path;
 

@@ -13,6 +13,7 @@
 #include "exit.h"
 #include "false.h"
 #include "true.h"
+#include "unset.h"
 
 vector_t args;
 char *cmd = NULL;

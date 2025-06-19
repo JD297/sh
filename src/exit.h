@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+#include "macro.h"
+
 extern int sh_built_in_exit(int argc, char **argv);
 
 static void sh_built_in_exit_usage(char **argv)
@@ -12,6 +14,7 @@ static void sh_built_in_exit_usage(char **argv)
 int sh_built_in_exit(int argc, char **argv)
 {
 	int opt;
+	OPTIND_RESET();
 	int code = 0;
 
 	while ((opt = getopt(argc, argv, "")) != -1) {
