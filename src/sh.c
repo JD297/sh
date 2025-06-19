@@ -6,13 +6,24 @@
 
 #include "exit.h"
 
+vector_t args;
+char *cmd = NULL;
+
+extern void sh_free();
+
+void sh_free()
+{
+	free(cmd);
+	vec_free(&args);
+}
+
 int main()
 {
-	vector_t args;
-
 	vec_init(&args);
 
-	char *cmd = NULL;
+	if (atexit(sh_free) != 0) {
+		return EXIT_FAILURE;
+	}
 
 	while ((cmd = readline("sh: ")) != NULL) {
 		if (*cmd == '\0') {
@@ -21,10 +32,11 @@ int main()
 
 		for (char *rst = cmd; ; rst = NULL) {
 				if (vec_push_back(&args, strtok(rst, " ")) == -1) {
-					// TODO error handle
+					return EXIT_FAILURE;
 				}
 
 				if (vec_at_last(&args) == NULL) {
+					--args.num;
 					break;
 				}
 		}
@@ -34,9 +46,7 @@ int main()
 		}
 
 		if (strcmp("exit", *vec_begin(&args)) == 0) {
-			//free(cmd); // TODO memory leak
-
-			sh_built_in_exit(args.num - 1, (char **)args.elements);
+			sh_built_in_exit(args.num, (char **)args.elements);
 		}
 
 		next: {
@@ -46,7 +56,5 @@ int main()
 		}
 	}
 
-	vec_free(&args);
-
-	return 0;
+	return EXIT_SUCCESS;
 }
