@@ -20,6 +20,7 @@ int sh_built_in_unset(int argc, char **argv)
 	OPTIND_RESET();
 	int fflag = 0;
 	int vflag = 0;
+	int code = EXIT_SUCCESS;
 
 	while ((opt = getopt(argc, argv, "fv")) != -1) {
 		switch (opt) {
@@ -45,9 +46,11 @@ int sh_built_in_unset(int argc, char **argv)
 			assert(0 && "not implemented: unset a function (-f)");
 		}
 		else {
-			unsetenv(argv[i]);
+			if (unsetenv(argv[i]) == -1) {
+				code = EXIT_FAILURE;
+			}
 		}
 	}
 
-	return EXIT_SUCCESS;
+	return code;
 }
