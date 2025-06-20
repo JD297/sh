@@ -11,7 +11,7 @@ MANDIR        = $(PREFIX)/share/man
 SRCDIR        = src
 BUILDDIR      = build
 
-BUILDINS      = $(SRCDIR)/exit.h $(SRCDIR)/colon.h $(SRCDIR)/true.h $(SRCDIR)/false.h $(SRCDIR)/cd.h $(SRCDIR)/unset.h $(SRCDIR)/macro.h
+BUILDINS      = $(SRCDIR)/exit.h $(SRCDIR)/colon.h $(SRCDIR)/true.h $(SRCDIR)/false.h $(SRCDIR)/cd.h $(SRCDIR)/unset.h $(SRCDIR)/macro.h $(SRCDIR)/getline.h
 
 GETLINE       = GETLINE_LIBC
 
