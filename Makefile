@@ -2,7 +2,7 @@
 
 CC            = cc
 CFLAGS        = -Wall -Wextra -Wpedantic -g
-LDFLAGS       = -lreadline
+LDFLAGS       = 
 
 TARGET        = sh
 PREFIX        = /usr/local
@@ -13,11 +13,13 @@ BUILDDIR      = build
 
 BUILDINS      = $(SRCDIR)/exit.h $(SRCDIR)/colon.h $(SRCDIR)/true.h $(SRCDIR)/false.h $(SRCDIR)/cd.h $(SRCDIR)/unset.h $(SRCDIR)/macro.h
 
+GETLINE       = GETLINE_LIBC
+
 $(BUILDDIR)/$(TARGET): $(BUILDDIR)/sh.o
 	$(CC) $(CFLAGS) $(BUILDDIR)/sh.o -o $@ $(LDFLAGS)
 
 $(BUILDDIR)/sh.o: $(SRCDIR)/sh.c $(SRCDIR)/vec.h $(BUILDINS)
-	$(CC) $(CFLAGS) -c $(SRCDIR)/sh.c -o $@
+	$(CC) $(CFLAGS) -D $(GETLINE) -c $(SRCDIR)/sh.c -o $@
 
 clean:
 	rm -f $(BUILDDIR)/*

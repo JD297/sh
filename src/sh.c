@@ -15,7 +15,6 @@
 #include "true.h"
 #include "unset.h"
 
-#include <readline/readline.h>
 
 vector_t args;
 char *cmd = NULL;
@@ -23,6 +22,52 @@ int code = 0;
 char *code_str = NULL;
 
 extern void sh_free(void);
+
+extern char *sh_getline(const char *promt);
+
+#ifdef GETLINE_LIBREADLINE
+
+#include <stdio.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+
+#define sh_getline(promt) readline((promt))
+
+#endif
+
+#ifdef GETLINE_LIBC
+
+#include <stddef.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+char *sh_getline(const char *promt)
+{
+	char *line = NULL;
+	size_t size;
+	ssize_t nread;
+
+	printf("%s", promt);
+	fflush(stdout);
+
+	if ((nread = getline(&line, &size, stdin)) == -1) {
+		putchar('\n');
+		free(line);
+		return NULL;
+	}
+
+	line[nread-1] = '\0';
+
+	return line;
+}
+
+#endif
+
+#ifdef GETLINE_LIBEDITLINE
+
+#error "NOT IMPLEMENTED"
+
+#endif
 
 void sh_free(void)
 {
@@ -39,7 +84,7 @@ int main(void)
 		return EXIT_FAILURE;
 	}
 
-	while ((cmd = readline("sh: ")) != NULL) {
+	while ((cmd = sh_getline("sh: ")) != NULL) {
 		if (*cmd == '\0') {
 			goto next;
 		}
